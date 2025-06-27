@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Desde un puerto distinto al origen - Postman ok / Navegador con Cors= ok </h1>
+    <script>
+        const product = {"nombre": "New Product", "precio": 30.22}
+        fetch("http://localhost:3000/products",{
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(product),
+
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+            // Error de cors no puedo acceder con dominio 5500 a otro con dominio 3000
+
+/*         fetch("http://localhost:3000/products",{
+    
+        })
+        .then(response => response.json())
+        .then(data => console.log(data)) */
+    </script>
+</body>
+</html>
