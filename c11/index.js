@@ -81,7 +81,36 @@ app.post("/products", (req, res) => {
   products.push(newProduct);
   res.status(200).json(newProduct); // Postman: lo muestra en post y en get lo agrega al final
 });
+app.put("/products/:id", (req, res) => {
+  const { nombre, precio } = req.body; //Extra:valido el nombre y el precio
+  if (!nombre || typeof nombre !== "string" || nombre.trim().length < 2) {
+    return res.status(400).json({ error: "Nombre inválido" });
+  }
+  if (precio === undefined || isNaN(precio) || Number(precio) <= 0) {
+    return res.status(400).json({ error: "Precio inválido" });
+  } // fin de la validación nombre y precio
+  const productId = parseInt(req.params.id, 10);
+  const productIndex = products.findIndex((p) => p.id === productId);
+  if (productIndex === -1) {
+    return res.status(404).json({ error: "Product does not exist" });
+  }
+  products[productIndex] = { id: productId, nombre, precio };
+  res.json(products[productIndex]);
+});
+app.delete("/products/:id", (req, res) => {
+  const productId = parseInt(req.params.id, 10);
+  const productIndex = products.findIndex((p) => p.id === productId);
+  if (productIndex === -1) {
+    return res.status(404).json({ error: "Product does not exist" });
+  }
+  products.splice(productIndex, 1);
+  res.status(204).send();
+});
 
+//Otro Middleware pero este va al final y es para mostrar el error con un json propio y No con un html que genera express y vemos en  // Una API no debería mostrar un html de error
+app.use((req,res)=>{
+  res.status(404).json({"error": "Not Found"})
+})
 const PORT = 3000;
 
 app.listen(PORT, (req, res) => console.log(`http://localhost:${PORT}`));
