@@ -1,0 +1,7 @@
+Services=No responde ni a una petición(controller) ni a la conexión con la base de datos (models)
+Está a entre medio del controller y del models. Es algo intermedio Ej encriptar contraseña de usuario
+También se puede usar ese servicio en distintos lugares
+
+Vamos hacer un servicio ficticio que tenga los productos y una función que los llame (aunque en realidad los productos deberían estar en una db y el modelo es quien tiene que obtener los productos)
+
+Otra utilidad es formatear datos que el modelo trae de la base de datos y luego ya formateados se las pasa al controlador
